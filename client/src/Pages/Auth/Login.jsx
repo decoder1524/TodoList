@@ -1,22 +1,29 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom'
 import "./AuthStyle.css"
 import AuthServices from '../../services/AuthServices'
+import toast from 'react-hot-toast'
+import { getErrorMessage } from '../../Utils/ErrorMessage'
 
 const Login = () => {
   const[email,setEmail] = useState('')
   const[password,setPassword] = useState('')
-
+  
+  const navigate = useNavigate()
   //login function
   const loginHandler = async (e) =>{
     try {
       e.preventDefault()
       const data = {email,password}
       const res = await AuthServices.loginUser(data)
+      toast.success(res.data.message)
+      navigate('/home')
+      localStorage.setItem('todoapp',JSON.stringify(res.data))
       console.log(res.data);
       
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      toast.error(getErrorMessage(err))
+      console.log(err);
       
     }
   

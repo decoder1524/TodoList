@@ -1,10 +1,12 @@
 import React from 'react'
+import Navbar from '../../Components/Layout/Navbar'
 
 const TodoList = () => {
   return (
-    <div>
+    <>
+    <Navbar/>
       <h1>Todo List</h1>
-    </div>
+    </>
   )
 }
 
