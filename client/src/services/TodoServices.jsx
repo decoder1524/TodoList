@@ -3,9 +3,19 @@ const user = JSON.parse(localStorage.getItem('todoapp'))
 axios.defaults.headers.common['Authorization'] = `bearer ${user.token}`
 
 const createTodo = (data)=>{
-    return axios.post('/todo/create',data)
+    return axios.post('api/v1/todo/create',data)
 
 }
+const getAllTodo = (id)=>{
+    return axios.post(`/api/v1/todo/getAll/${id}`)
 
-const TodoServices = {createTodo}
+}
+const updateTodo = (id,data)=>{
+    return axios.patch('/api/v1/todo/update/'+id,data)
+}
+const deleteTodo = (id)=>{
+    return axios.delete('/api/v1/todo/delete/'+id)
+}
+
+const TodoServices = {createTodo,getAllTodo,updateTodo,deleteTodo}
 export default TodoServices

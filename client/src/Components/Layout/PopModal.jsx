@@ -1,18 +1,19 @@
 import React from 'react'
 import toast from 'react-hot-toast'
 import TodoServices from '../../services/TodoServices'
-const PopModal = ({title,setTitle,description,setDescription,showModal,setShowModal}) => {
+const PopModal = ({title,setTitle,description,setDescription,showModal,setShowModal,getUserTask}) => {
     const handleClose = ()=>{setShowModal(false)}
     const handleSubmit = async ()=>{
         try {
             const userData = JSON.parse(localStorage.getItem('todoapp'))
-            const id = userData && userData.user.id
-            const data = {title,description,id}
+            const createdBy = userData && userData.user.id
+            const data = {title,description,createdBy}
             if(!title ||!description){
                 return toast.error("Please provide title or description")
             }
             const todo = await TodoServices.createTodo(data)
             setShowModal(false)
+            getUserTask()
             toast.success("Task Created Successfully")
             console.log(todo);          
             setTitle('')
